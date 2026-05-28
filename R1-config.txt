@@ -1,0 +1,23 @@
+! R1 - Core Router Configuration
+! Enterprise Network Lab
+! Date: May 2026
+
+hostname R1
+
+interface GigabitEthernet0/0
+ ip address 10.0.0.2 255.255.255.252
+ ip access-group 100 in
+ no shutdown
+
+interface GigabitEthernet0/1
+ ip address 192.168.10.1 255.255.255.0
+ no shutdown
+
+router ospf 1
+ network 10.0.0.0 0.0.0.3 area 0
+ network 192.168.10.0 0.0.0.255 area 0
+
+ip route 0.0.0.0 0.0.0.0 10.0.0.1
+
+access-list 100 deny ip 192.168.20.0 0.0.0.255 192.168.10.0 0.0.0.255
+access-list 100 permit ip any any
